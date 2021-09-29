@@ -25,10 +25,16 @@ jobs:
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: '**/*.trx' 
-  - task: CopyFiles@2
+  - task: DotNetCoreCLI@2
     inputs:
-      targetFolder: '$(Build.ArtifactStagingDirectory)' 
-  - task: PublishBuildArtifacts@1
+      command: 'publish'
+      publishWebProjects: true
+      arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+  
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: '$(Build.ArtifactStagingDirectory)'
+      publishLocation: 'pipeline'
   
 
 # - job: Windows
