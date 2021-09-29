@@ -11,10 +11,10 @@ jobs:
   pool:
     vmImage: 'Ubuntu 16.04'
   steps:
-#  - task: DotNetCoreInstaller@0
-#    inputs:
-#      packageType: 'sdk'
-#      version: '2.2.401'
+  - task: DotNetCoreInstaller@0
+    inputs:
+      packageType: 'sdk'
+      version: '2.2.401'
   - script: dotnet build ./SimplCommerce.sln
     displayName: 'dotnet build'
   - script: ./run-tests.sh
@@ -25,13 +25,13 @@ jobs:
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: '**/*.trx' 
-  - task: DotNetCoreCLI@2
-    displayName: Publish
-    inputs:
-      command: publish
-      publishWebProjects: True
-      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
-      zipAfterPublish: True
+  # - task: DotNetCoreCLI@2
+  #   displayName: Publish
+  #   inputs:
+  #     command: publish
+  #     publishWebProjects: True
+  #     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+  #     zipAfterPublish: True
   
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact'
